@@ -1,0 +1,279 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #eef5ff;
+}
+
+.popup {
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  background-color: #a2d5f2;
+  width: 1000px;
+  height: 600px;
+  padding: 20px;
+}
+
+.itemhead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemhead input {
+  background-color: none;
+  padding: 5px 4px;
+  border-radius: 10px;
+  border: 1px solid rgb(140, 160, 6);
+}
+.itemhead a {
+  text-decoration: none;
+  padding: 4px 10px;
+  color: #fff;
+  background-color: rgb(231, 83, 8);
+  border-radius: 15px;
+}
+.itemhead a:hover {
+  background-color: rgb(255, 34, 0);
+}
+.close {
+  color: rgb(0, 0, 0);
+  padding: 3px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.close:hover {
+  color: red;
+}
+.p-items {
+  margin: 30px 0 20px 0;
+}
+.popup-form .main-fo-co {
+  display: flex;
+  justify-content: space-between;
+}
+.add {
+  width: 100%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.add button {
+  padding: 8px 12px;
+  background-color: rgb(19, 177, 11);
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+}
+.add button:hover {
+  background-color: rgb(8, 190, 196);
+}
+
+.itemtable {
+  width: 800px;
+  margin: 20px auto;
+  height: 400px;
+  background-color: #fff;
+}
+
+.itemtable table {
+  width: 100%;
+}
+
+.itemtable table thead {
+  background-color: rgb(231, 83, 8);
+  color: #fff;
+  height: 25px;
+}
+
+header {
+  color: #fff;
+  width: 100%;
+  padding: 10px 0px;
+  background-color: #176b87;
+}
+
+.header {
+  width: 96%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.view-item {
+  border: none;
+  color: #fff;
+  background: none;
+  font-size: 16px;
+}
+.view-item:hover{
+  color: #000;
+}
+.header nav .top-right{
+  width: 203px;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: auto;
+  background: #f0f8ff00;
+}
+
+.header nav .top-right a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+.header nav .top-right a:hover {
+  color: rgb(0, 0, 0);
+}
+
+.d-t {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#datetime {
+  font-size: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+.c-details,
+.p-details {
+  padding: 0 0 20px 0;
+  margin: 0px auto 20px;
+  width: 90%;
+  border-bottom: 1px solid #000;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.form-control input {
+  width: 200px;
+  padding: 4px 2px;
+  font-size: 16px;
+}
+
+.up-dt-ac {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.up-dt-ac button {
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.up-dt-ac button:first-child {
+  background-color: rgb(5, 190, 21);
+  color: #fff;
+  border: none;
+}
+
+.up-dt-ac button {
+  background-color: red;
+  color: #fff;
+  border: none;
+}
+
+.up-dt-ac button:last-child {
+  background-color: #e46816;
+  color: #fff;
+  border: none;
+}
+
+.up-dt-ac button:hover {
+  color: #000;
+}
+
+.cart {
+  width: 90%;
+  margin: 20px auto;
+  height: 150px;
+  max-height: 150px;
+  overflow-y: scroll;
+  background-color: #fff;
+}
+
+table {
+  width: 100%;
+  height: 25px;
+}
+
+.total {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.grandtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.control-form {
+  margin: 5px;
+}
+
+.control-form input {
+  width: 200px;
+  padding: 4px 2px;
+}
+
+.print {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+}
+
+.print button {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  background-color: rgb(5, 66, 146);
+  color: #fff;
+  font-size: 20px;
+  border: none;
+}
+
+.print button:hover {
+  background-color: rgb(9, 165, 43);
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */
