@@ -1,2 +1,3 @@
-A Billing System
-College Project
+# A Billing System
+
+A Project for college
