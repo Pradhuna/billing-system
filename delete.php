@@ -1,4 +1,6 @@
 <?php
+    require_once "checkUserAuth.php";
+
     include 'connection.php';
 
     $query = "DELETE FROM products Where id = '$_GET[id]'";

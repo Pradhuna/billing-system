@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+require_once "checkUserAuth.php";
+
+?>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -74,11 +78,7 @@
                   ><i class="fa-solid fa-list"></i> Items Details</a
                 >
               </li>
-              <li>
-                <a href=""
-                  ><i class="fa-solid fa-book"></i> Sales Report</a
-                >
-              </li>
+             
               <li>
                 <a href="users.php" class="active"
                   ><i class="fa-solid fa-users"></i> Users</a
@@ -95,7 +95,7 @@
                 >
               </li>
               <li>
-                <a href=""
+                <a href="logout.php"
                   ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
                 >
               </li>
@@ -114,7 +114,12 @@
     margin: 0 auto;">
         <button id="show" style="width: 100px; padding: 5px; font-size: 20px; background: chocolate; font-weight: bold; color: #fff; border: none;" >Add</button>
         </div>
-        
+        <?php
+        if (isset($_SESSION['message'])) {
+            echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
+            unset($_SESSION['message']);
+        }
+        ?>
         <div class="re-fo">
         
           <div id="popup" style="display: none;">
@@ -155,12 +160,12 @@
               
               <div class="emp-fo-co">
                 <label for="">Password</label
-                ><input type="text" id="Password" name="password"/>
+                ><input type="password" id="Password" name="password"/>
               </div>
-              <!-- <div class="emp-fo-co">
+              <div class="emp-fo-co">
                 <label for="">Confirm Password</label
-                ><input type="text" id="cpassword" name="confirm_password"/>
-              </div> -->
+                ><input type="password" id="cpassword" name="confirm_password"/>
+              </div>
               <div class="emp-fo-co">
                 <label for="">Role</label>
                 <select id="role" name="role" required>
@@ -196,7 +201,7 @@
                     
                             // Insert the data into the database
                             $query = "INSERT INTO users (name, email, phone, username, gender, password, role) 
-                                      VALUES ('$name', '$email', '$phone', '$username', '$gender', '$confirm_password','$role')";
+                                      VALUES ('$name', '$email', '$phone', '$username', '$gender', '$hashed_password','$role')";
                     
                             $result = mysqli_query($con, $query);
                     
@@ -243,7 +248,7 @@
                         <td>
                         <a href='#' class='view_btn'><button><i class='fas fa-eye'></i></button></a>
                         <a href='#' class='update_btn'><button><i class='fas fa-edit'></i></button></a>
-                        <a href=''<button><i class='fa-solid fa-trash'></i></i></button></>
+                        <a href='delete-user.php?id=" . $userRow['id'] . "' class='delete_btn'>'<button><i class='fa-solid fa-trash'></i></i></button></>
                         </td>
                     </tr>";
             }
@@ -281,7 +286,7 @@
         <header>
             <div id="closeUpdatePopup">✖</div>
         </header>
-        <form action="viewcode.php" method="POST">
+        <form action="update-user.php" method="POST">
             <!-- Input fields for update -->
 
             <div class="emp-fo-co">
@@ -303,9 +308,6 @@
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
-            </div>
-            <div class="emp-fo-co">
-                <label for="">Password</label><input type="text" id="updatePassword" name="password" />
             </div>
             <div class="emp-fo-co">
                 <label for="">Role</label>

@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+require_once "checkUserAuth.php";
 
 if(isset($_POST['check_viewbtn'])){
     $username = mysqli_real_escape_string($con, $_POST['user_name']);

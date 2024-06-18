@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "checkUserAuth.php";
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -69,8 +69,6 @@ function createBill($con) {
 }
 
 function updateBill($con) {
-    $table_no = $_POST['table_no'];
-    $status = 'pending';
     $discount = $_POST['discount']??0;
     $tax = $_POST['tax']??0;
     $vat = $_POST['vat']??0;
@@ -97,12 +95,6 @@ function updateBill($con) {
         exit;
     }
     
-
-    $sub_total = $productPrice * $productQty;
-    $grand_total = calculateGrandTotal($sub_total, $discount, $tax, $vat);
-
-
-
     $product_id = $productId;
     $price = $productPrice;
     $qty = $productQty;
@@ -154,7 +146,6 @@ function calculateGrandTotal($sub_total, $discount, $tax, $vat) {
 }
 
 function updateBillTotal($con, $bill_no, $status = 'pending') {
-    // Fetch discount, tax, vat, and table_no from Bills table
     $stmt = $con->prepare("SELECT discount, tax, vat, table_no FROM Bills WHERE bill_no = ?");
     $stmt->bind_param("i", $bill_no);
     $stmt->execute();
@@ -167,7 +158,6 @@ function updateBillTotal($con, $bill_no, $status = 'pending') {
     $vat = $bill_details['vat'];
     $table_no = $bill_details['table_no'];
 
-    // Calculate the sub_total from BillProducts
     $stmt = $con->prepare("SELECT SUM(price * qty) as sub_total FROM BillProducts WHERE bill_no = ?");
     $stmt->bind_param("i", $bill_no);
     $stmt->execute();
@@ -177,10 +167,8 @@ function updateBillTotal($con, $bill_no, $status = 'pending') {
 
     $sub_total = $bill_data['sub_total'];
 
-    // Calculate the grand_total
     $grand_total = $sub_total - ($sub_total * ($discount / 100)) + ($sub_total * ($tax / 100)) + ($sub_total * ($vat / 100));
 
-    // Update the Bills table
     $stmt = $con->prepare("UPDATE Bills SET table_no = ?, status = ?, sub_total = ?, discount = ?, tax = ?, vat = ?, grand_total = ?, updated_date = NOW() WHERE bill_no = ?");
     $stmt->bind_param("issddddi", $table_no, $status, $sub_total, $discount, $tax, $vat, $grand_total, $bill_no);
     $stmt->execute();

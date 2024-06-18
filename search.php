@@ -12,9 +12,7 @@
                     <th>ID</th>
                     <th>Particular</th>
                     <th>Price</th>
-                    <!-- <th>Action</th> -->
                   </tr>
-                  <!-- PHP Code Start -->
                   <?php
 include "connection.php";
 

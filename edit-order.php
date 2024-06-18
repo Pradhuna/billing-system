@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-session_start();
+require_once "checkUserAuth.php";
+
 ?>
 <html lang="en">
   <head>

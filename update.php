@@ -1,3 +1,6 @@
+<?php
+require_once "checkUserAuth.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,7 +55,7 @@
                 >
               </li>
               <li>
-                <a href=""
+                <a href="logout.php"
                   ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
                 >
               </li>

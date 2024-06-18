@@ -1,3 +1,6 @@
+<?php
+require_once "checkUserAuth.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,16 +34,14 @@
                   ><i class="fa-solid fa-list"></i> Items Details</a
                 >
               </li>
-              <li>
-                <a href=""
-                  ><i class="fa-solid fa-book"></i> Sales Report</a
-                >
-              </li>
+             
+              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
                 <a href="users.php"
                   ><i class="fa-solid fa-users"></i> Users</a
                 >
               </li>
+              <?php } ?>
               <li>
                 <a href="orders.php"
                   ><i class="fa-solid fa-users"></i> Orders</a
@@ -52,7 +53,7 @@
                 >
               </li>
               <li>
-                <a href=""
+                <a href="logout.php"
                   ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
                 >
               </li>
