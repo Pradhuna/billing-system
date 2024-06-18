@@ -13,13 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ii", $product_qty, $product_id);
 
     if ($stmt->execute()) {
-        // Redirect back to the page with a success message
         $_SESSION['message'] = "Product updated successfully";
         updateBillTotal($con, $bill_no);
         header("Location: ../edit-order.php?bill_no=" . $bill_no);
         exit();
     } else {
-        // Redirect back to the page with an error message
         $_SESSION['message'] = "Error updating product";
         header("Location: ../edit-order.php?bill_no=" . $bill_no);
         exit();

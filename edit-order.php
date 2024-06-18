@@ -60,12 +60,7 @@ session_start();
       </div>
     </header>
 
-    <!-- <section>
-      <div style="margin: 10px auto; width: 90%; text-align: end">
-        <label for="" style="font-weight: bold">Bill No.</label>
-        <input type="text" name="bill_no" id="" style="width: 40px; padding: 4px" />
-      </div>
-    </section> -->
+
     <?php
     include "connection.php";
     if (isset($_GET['bill_no'])) {
@@ -91,6 +86,13 @@ session_start();
     }
 
     ?>
+<?php if($bill_data['status'] == 'pending'){ ?>
+<section>
+      <div style="margin: 10px auto; width: 90%; text-align: end">
+        <label for="" style="font-weight: bold">Bill No.</label>
+        <input type="text" name="bill_no" disabled value="<?php echo $bill_data['bill_no']; ?>" id="" style="width: 40px; padding: 4px" />
+      </div>
+    </section>
     <form action="bill_management.php?bill_no=<?php echo $bill_no; ?>" class="" method="POST">
       <section>
         <div class="c-details">
@@ -111,7 +113,7 @@ session_start();
         <h2>Product Details</h2>
           <div class="form-control">
             <label for="">Product ID:</label>
-            <input type="text" name="product_id" id="pid" />
+            <input type="text" name="product_id" id="pid" readonly />
           </div>
           <div class="form-control">
             <label for="">Product Name:</label>
@@ -120,11 +122,11 @@ session_start();
           </div>
           <div class="form-control">
             <label for="">Price:</label>
-            <input type="text" id="price" name="product_price" />
+            <input type="text" id="price" name="product_price"  readonly/>
           </div>
           <div class="form-control">
             <label for="">Quantity:</label>
-            <input type="number" id="qty" name="product_qty" />
+            <input type="number" id="qty" name="product_qty"/>
           </div>
          
       </div>
@@ -138,7 +140,9 @@ session_start();
       </button>
     </div>
     </form>
-
+<?php
+}
+?>
     <section>
       <div class="cart">
         <table>
@@ -148,7 +152,7 @@ session_start();
             <th>QTY</th>
             <th>Price</th>
             <th>Amount</th>
-            <th>Action</th>
+            <?php if($bill_data['status'] == 'pending'){ ?><th>Action</th><?php } ?>
           </tr>
           <?php
           $sn = 1;
@@ -168,12 +172,14 @@ session_start();
             <td><?php echo $billProduct['qty']; ?></td>
             <td><?php echo $product_data['price']; ?></td>
             <td><?php echo number_format($billProduct['qty'] * $product_data['price']); ?></td>
+            <?php if($bill_data['status'] == 'pending'){ ?>
             <td>
             <button type="button" class="btn-sm fa fa-edit " data-toggle="modal" data-target="#editModal" data-id = "<?php echo $product_data['id']; ?>" data-qty="<?php echo $billProduct['qty']; ?>" data-bill_no = "<?php echo $bill_no; ?>">
             </button>
             <button type="button" class="btn-sm btn-danger fa fa-trash " data-toggle="modal" data-target="#deleteModal" data-id = "<?php echo $product_data['id']; ?>"  data-bill_no = "<?php echo $bill_no; ?>">
             </button>
             </td>
+            <?php } ?>
 
           </tr>
           
@@ -182,18 +188,12 @@ session_start();
               }
           }
           ?>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        
         </table>
       </div>
     </section>
 
     <section>
+      <form action="bills/calculate-order.php?bill_no=<?php echo $bill_no; ?>" method="post">
       <div class="total">
           <div class="control-form">
             <label for="">SubTotal</label>
@@ -218,12 +218,47 @@ session_start();
       </div>
     </section>
 
+    <?php if($bill_data['status'] == 'pending'){ ?>
     <div class="print">
-      <button><i class="fa fa-print" aria-hidden="true"></i> Bill</button>
+      <button type="submit"><i class="fa fa-print" aria-hidden="true"></i> Generate Bill</button>
+      <button type="button" class="btn-sm fa fa-money-bill " data-toggle="modal" data-target="#changeStatusModal">
+      Change Status
+      </button>
     </div>
 
+    <?php } ?>
+    </form>
 
     <!-- Modals -->
+    <div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeStatusModalLabel">Update Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="bills/update-status.php?bill_no=<?php echo $bill_no; ?>" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="product_id" id="edit_product_id">
+                        <div class="form-group">
+                            <label for="status">Change Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                            </select>
+                            <input type="hidden" name="bill_no" id="bill_no">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

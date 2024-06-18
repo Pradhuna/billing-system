@@ -41,6 +41,11 @@
                 >
               </li>
               <li>
+                <a href="orders.php"
+                  ><i class="fa-solid fa-users"></i> Orders</a
+                >
+              </li>
+              <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a
                 >

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+  <?php
+  session_start();
+  ?>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -80,12 +83,12 @@
                 >
               </li>
               <li>
-                <a href="users.php" class="active"
+                <a href="users.php"
                   ><i class="fa-solid fa-users"></i> Users</a
                 >
               </li>
               <li>
-                <a href="orders.php"
+                <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
@@ -105,145 +108,57 @@
       </div>
       <div class="pro-it">
         <div class="so-in">
-          <h1>Users Registration</h1>
+          <h1>Orders</h1>
         </div>
        
         <div style="max-width: 1000px;
     width: 100%;
     display: flex;
     margin: 0 auto;">
-        <button id="show" style="width: 100px; padding: 5px; font-size: 20px; background: chocolate; font-weight: bold; color: #fff; border: none;" >Add</button>
+        <a href="create-order.php" style="width: 100px; padding: 5px; font-size: 20px; background: chocolate; font-weight: bold; color: #fff; border: none;"><i class="fa-solid fa-plus"></i> Add Order</a>
         </div>
+
+        <?php
+    if (isset($_SESSION['message'])) {
+        echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
+        unset($_SESSION['message']);
+    }
+    ?>
         
         <div class="re-fo">
-        
-          <div id="popup" style="display: none;">
-          <div class="overlay"></div>
-          <div class="reg-form">
-          <header>
-                 <div id="close">✖</div>
-               </header>
-            <form action="" method="POST">
-            <div class="emp-fo-co">
-                <label for="">Username</label
-                ><input type="text" id="Username" name="username"/>
-              </div>
-              <div class="emp-fo-co">
-                <label for="">Name</label>
-                <input type="text" id="name" name="name"/>
-              </div>
-              <div class="emp-fo-co">
-                <label for="">Email</label>
-                <input type="text" id="email" name="email"/>
-              </div>
-              <div class="emp-fo-co">
-                <label for="">Phone</label>
-                <input type="phone" id="phone" name="phone"/>
-              </div>
-              
-              <div class="emp-fo-co">
-                <!-- <label for="">Gender</label><input type="radio" name="gender" />Male
-                <input type="radio" name="gender" />Female
-                <input type="radio" name="gender" name="" id="" />Other -->
-                <label for="gender">Gender:</label>
-                  <select id="gender" name="gender" required>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-              </div>
-              
-              <div class="emp-fo-co">
-                <label for="">Password</label
-                ><input type="text" id="Password" name="password"/>
-              </div>
-              <!-- <div class="emp-fo-co">
-                <label for="">Confirm Password</label
-                ><input type="text" id="cpassword" name="confirm_password"/>
-              </div> -->
-              <div class="emp-fo-co">
-                <label for="">Role</label>
-                <select id="role" name="role" required>
-                  <option value="Admin">Admin</option>
-                  <option value="User">User</option>
-                </select>
-              </div>
-              <div class="emp-fo-co">
-                <input type="submit" value="submit" name="submit" style="width:100px"/>
-                <button type="button" id="cancel" style="margin-left:10px;border:none; width:100px; border-radius:20px; background-color:orange;font-size:18px; font-weight:bold; color:#fff; ">Cancel</button>
-                <!-- <label for=""></label><input type="text" /> -->
-              </div>
-              <?php
-                    include 'connection.php';
-                    if(isset($_POST['submit'])) {
-                      $name = mysqli_real_escape_string($con, $_POST['name']);
-                      $email = mysqli_real_escape_string($con, $_POST['email']);
-                      $phone = mysqli_real_escape_string($con, $_POST['phone']);
-                      $username = mysqli_real_escape_string($con, $_POST['username']);
-                      $gender = mysqli_real_escape_string($con, $_POST['gender']);
-                      $password = mysqli_real_escape_string($con, $_POST['password']);
-                      $confirm_password = mysqli_real_escape_string($con, $_POST['confirm_password']);
-                      $role = mysqli_real_escape_string($con, $_POST['role']);
-                    
-                        // Validation and error checking (you may want to add more thorough validation)
-                        if(empty($name) || empty($email) || empty($phone) || empty($username) || empty($gender) || empty($password) || empty($confirm_password) || empty($role)) {
-                            echo "All fields are required.";
-                        } elseif ($password !== $confirm_password) {
-                            echo "Password and Confirm Password do not match.";
-                        } else {
-                            // Hash the password before storing it in the database
-                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                    
-                            // Insert the data into the database
-                            $query = "INSERT INTO users (name, email, phone, username, gender, password, role) 
-                                      VALUES ('$name', '$email', '$phone', '$username', '$gender', '$confirm_password','$role')";
-                    
-                            $result = mysqli_query($con, $query);
-                    
-                            if ($result) {
-                                // echo "User registered successfully!";
-                                // You can also redirect the user to another page after successful registration
-                            } else {
-                                echo "Error: " . mysqli_error($con);
-                            }
-                        }
-                    }
-                    
-                ?>
-            </form>
-                  </div>
-          </div>
           <div class="form-list">
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Username</th>
-                  <th>Gender</th>
-                  <th>Role</th>
+                  <th>Table No</th>
+                  <th>Bill No.</th>
+                  <th>Sub Total</th>
+                  <th>Discount</th>
+                  <th>Vat</th>
+                  <th>Tax</th>
+                  <th>Grand Total</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
             <?php
             include "connection.php";
-            $userQuery = "SELECT * FROM users";
-            $userResult = mysqli_query($con, $userQuery);
+            $billQuery = "SELECT * FROM bills";
+            $billResult = mysqli_query($con, $billQuery);
 
-            while ($userRow = mysqli_fetch_assoc($userResult)) {
+            while ($billRow = mysqli_fetch_assoc($billResult)) {
                 echo "<tr>
-                        <td >".$userRow['name']."</td>
-                        <td>".$userRow['email']."</td>
-                        <td>".$userRow['phone']."</td>
-                        <td class='user_name'>".$userRow['username']."</td>
-                        <td>".$userRow['gender']."</td>
-                        <td>".$userRow['role']."</td>
+                        <td >".$billRow['table_no']."</td>
+                        <td>".$billRow['bill_no']."</td>
+                        <td>".$billRow['sub_total']."</td>
+                        <td class='bill_name'>".$billRow['discount']."</td>
+                        <td>".$billRow['tax']."</td>
+                        <td>".$billRow['vat']."</td>
+                        <td>".$billRow['grand_total']."</td>
+                        <td>".$billRow['status']."</td>
                         <td>
-                        <a href='#' class='view_btn'><button><i class='fas fa-eye'></i></button></a>
-                        <a href='#' class='update_btn'><button><i class='fas fa-edit'></i></button></a>
-                        <a href=''<button><i class='fa-solid fa-trash'></i></i></button></>
+                        <a href='edit-order.php?bill_no=".$billRow['bill_no']."'><button><i class='fas fa-edit'></i></button></a>
                         </td>
                     </tr>";
             }

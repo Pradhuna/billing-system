@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->execute()) {
             $_SESSION['message'] = "Product deleted successfully.";
+            updateBillTotal($con, $bill_no);
         } else {
             $_SESSION['message'] = "Failed to delete product.";
         }

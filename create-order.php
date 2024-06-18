@@ -104,7 +104,7 @@ session_start();
         <h2>Product Details</h2>
           <div class="form-control">
             <label for="">Product ID:</label>
-            <input type="text" name="product_id" id="pid" />
+            <input type="text" name="product_id" id="pid" readonly/>
           </div>
           <div class="form-control">
             <label for="">Product Name:</label>
@@ -113,7 +113,7 @@ session_start();
           </div>
           <div class="form-control">
             <label for="">Price:</label>
-            <input type="text" id="price" name="product_price" />
+            <input type="text" id="price" name="product_price" readonly/>
           </div>
           <div class="form-control">
             <label for="">Quantity:</label>
@@ -166,7 +166,7 @@ session_start();
         </table>
       </div>
     </section>
-    <section>
+    <!-- <section>
       <div class="total">
         <form action="" class="grandtotal">
           <div class="control-form">
@@ -194,7 +194,7 @@ session_start();
     </section>
     <div class="print">
       <button><i class="fa fa-print" aria-hidden="true"></i> Bill</button>
-    </div>
+    </div> -->
     <script>
       function updateDateTime() {
         var dateTimeElement = document.getElementById("datetime");
