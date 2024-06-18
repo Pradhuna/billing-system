@@ -69,10 +69,17 @@
             </div>
           </div>
         </div>
+        <?php
+          include 'connection.php';
+          $sql = "SELECT SUM(grand_total) as total_sales FROM bills";
+          $result = $con->query($sql);
+          $row = $result->fetch_assoc();
+          $total_sales = $row['total_sales'];
+        ?>
         <div class="stats">
           <div class="stat-box">
             <h2>Total Sales</h2>
-            <p>$5,000</p>
+            <p>$<?php echo $total_sales; ?></p>
           </div>
 
           <!-- <div class="stat-box">
@@ -80,9 +87,25 @@
             <p>$4,000</p>
           </div> -->
 
+          <?php
+            $sql = "SELECT p.name, SUM(bp.qty) as total_units 
+                    FROM billProducts bp 
+                    JOIN products p ON bp.product_id = p.id 
+                    GROUP BY bp.id 
+                    ORDER BY total_units DESC 
+                    LIMIT 5";
+            $result = $con->query($sql);
+            
+          ?>
           <div class="stat-box">
             <h2>Top Sales</h2>
-            <p>Item A - 100 units</p>
+            <?php
+            while($row = $result->fetch_assoc()) {
+            ?>
+            <p><?php echo $row['name']; ?> - <?php echo $row['total_units']; ?> units</p>
+          <?php
+            }
+          ?>
           </div>
         </div>
       </div>
