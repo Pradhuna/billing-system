@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+session_start();
+?>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -68,77 +71,40 @@
             </button>
           </div>
         </div>
-        <div class="itemtable">
-          <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Product Name</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <?php
-                    include "connection.php";
-                    $query = "SELECT * FROM products";
-                    $result = mysqli_query($con, $query);
-
-                    while($row = mysqli_fetch_assoc($result))
-                    {
-                        
-                        $id = $row['id'];
-                        $name = $row['name'];
-                        $price = $row['price'];
-                        
-                        echo "<tr style='height:25px; text-align:center;'>
-                        <td>".$id."</td>
-                        <td>".$name."</td>
-                        <td>".$price."</td>
-                        </tr>";
-                    }
-                        
-                    ?>
-          </table>
-        </div>
+       
       </div>
     </div>
     <!-- popup end -->
-
-    <section>
+          
+    <!-- <section>
       <div style="margin: 10px auto; width: 90%; text-align: end">
         <label for="" style="font-weight: bold">Bill No.</label>
-        <input type="text" name="" id="" style="width: 40px; padding: 4px" />
+        <input type="text" name="bill_no" id="" style="width: 40px; padding: 4px" />
       </div>
-    </section>
-    <section>
-      <div class="c-details">
-        <!-- <h2>Customer Detail</h2> -->
-        <form action="" class="form">
+    </section> -->
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
+        unset($_SESSION['message']);
+    }
+    ?>
+    <form action="bill_management.php" class="form" method="POST">
+      <section>
+        <div class="c-details">
+          <!-- <h2>Customer Detail</h2> -->
           <div class="form-control">
             <label for="">Table No.:</label>
-            <input type="text" id="cid" />
+            <input type="number" name="table_no" id="cid" />
+            <input type="hidden" name="action" value="create">
           </div>
-          <!-- <div class="form-control">
-            <label for="">Name:</label>
-            <input type="text" id="cname" />
-          </div>
-          <div class="form-control">
-            <label for="">Email:</label>
-            <input type="text" id="cemail" />
-          </div>
-          <div class="form-control">
-            <label for="">Address:</label>
-            <input type="text" id="caddress" />
-          </div> -->
-        </form>
       </div>
     </section>
     <section>
       <div class="p-details">
         <h2>Product Details</h2>
-        <form action="" class="form" method="POST">
           <div class="form-control">
             <label for="">Product ID:</label>
-            <input type="text" id="pid" />
+            <input type="text" name="product_id" id="pid" />
           </div>
           <div class="form-control">
             <label for="">Product Name:</label>
@@ -147,16 +113,16 @@
           </div>
           <div class="form-control">
             <label for="">Price:</label>
-            <input type="text" id="price" />
+            <input type="text" id="price" name="product_price" />
           </div>
           <div class="form-control">
             <label for="">Quantity:</label>
-            <input type="number" id="qty" />
+            <input type="number" id="qty" name="product_qty" />
           </div>
          
-        </form>
       </div>
     </section>
+    
     <div class="up-dt-ac">
       <!-- <button><i class="fa fa-edit" aria-hidden="true"></i> Update</button> -->
       <!-- <button><i class="fa fa-trash" aria-hidden="true"></i> Delete</button> -->
@@ -164,6 +130,7 @@
         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
       </button>
     </div>
+  </form>
     <section>
       <div class="cart">
         <table>

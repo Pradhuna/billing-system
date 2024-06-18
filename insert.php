@@ -109,6 +109,7 @@
                         // }
                         if(empty($id) || empty($name) || empty($price)) {
                           echo "All fields are required.";
+                          return;
                       }
                         $query = "INSERT INTO products VALUES($id, '$name', $price)";
                         $result = mysqli_query($con,$query);
