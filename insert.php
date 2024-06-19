@@ -95,7 +95,7 @@ require_once "checkUserAuth.php";
                     <i class="fa-solid fa-plus"></i> Add
                   </button>
                   
-                  <button class="ca">
+                  <button class="ca" name="pcancel">
                     <i class="fa-solid fa-xmark"></i> Cancel
                   </button>
                 </div>
@@ -127,6 +127,7 @@ require_once "checkUserAuth.php";
                             // die(mysqli_error($result));
                         }
                     }
+                    
 
                 ?>
               </form>

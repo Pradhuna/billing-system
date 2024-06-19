@@ -73,12 +73,13 @@ require_once "checkUserAuth.php";
               <li>
                 <a href="home.php"><i class="fa-solid fa-house"></i> Home</a>
               </li>
+              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
                 <a href="insert.php"
                   ><i class="fa-solid fa-list"></i> Items Details</a
                 >
               </li>
-             
+              <?php } ?>
               <li>
                 <a href="users.php" class="active"
                   ><i class="fa-solid fa-users"></i> Users</a

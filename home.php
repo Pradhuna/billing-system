@@ -23,11 +23,10 @@ require_once "checkUserAuth.php";
         <div class="head">
           <h1><i class="fa-solid fa-desktop"></i> RBS</h1>
           <nav>
-            <ul>
+          <ul>
+              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
-                <a href="home.php" class="active"
-                  ><i class="fa-solid fa-house"></i> Home</a
-                >
+                <a href="home.php"><i class="fa-solid fa-house"></i> Home</a>
               </li>
               <li>
                 <a href="insert.php"
@@ -35,7 +34,6 @@ require_once "checkUserAuth.php";
                 >
               </li>
              
-              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
                 <a href="users.php"
                   ><i class="fa-solid fa-users"></i> Users</a
@@ -43,7 +41,7 @@ require_once "checkUserAuth.php";
               </li>
               <?php } ?>
               <li>
-                <a href="orders.php"
+                <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>

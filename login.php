@@ -47,8 +47,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["role"] = $role;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
-                            
-                            header("location: home.php");
+                            if ($role == "admin") {
+
+                                header("location: home.php");
+                                exit();
+                            }
+                            header("location: orders.php");
+                            exit();
+
                         } else{
                             $login_err = "Invalid username or password.";
                         }

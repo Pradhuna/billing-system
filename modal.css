@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.modal-wrapper {
+    position: fixed;
+    overflow: auto;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.print-button {
+    display: flex;
+    justify-content: center;
+}
+
+.print-button button {
+    padding: 12px 40px;
+    background-color: cornflowerblue;
+}
+
+.hidden {
+    display: none;
+}
+
+.invoice-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.invoice-header h1 {
+    margin: 0;
+}
+
+.invoice-details,
+.invoice-customer {
+    margin-bottom: 20px;
+}
+
+.invoice-details p,
+.invoice-customer p {
+    margin: 5px 0;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-table th,
+.invoice-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #f2f2f2;
+}
+
+.invoice-table tfoot td {
+    border: none;
+}
+.invoice-table tfoot td:first-child{
+    text-align: end ;
+}
+.right {
+    text-align: right;
+}
+
+.invoice-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+tfoot td{
+    text-align: end;
+}

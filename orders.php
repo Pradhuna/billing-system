@@ -69,6 +69,7 @@
           <h1><i class="fa-solid fa-desktop"></i> RBS</h1>
           <nav>
             <ul>
+              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
                 <a href="home.php"><i class="fa-solid fa-house"></i> Home</a>
               </li>
@@ -78,7 +79,6 @@
                 >
               </li>
              
-              <?php if($_SESSION["role"] == "admin"){ ?>
               <li>
                 <a href="users.php"
                   ><i class="fa-solid fa-users"></i> Users</a

@@ -9,6 +9,7 @@ require_once "checkUserAuth.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Billing</title>
     <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="modal.css" />
     <!-- <link rel="stylesheet" href="itemlist.css" /> -->
     <link
       rel="stylesheet"
@@ -40,6 +41,7 @@ require_once "checkUserAuth.php";
            </style>  
   </head>
   <body>
+ 
     <header>
       <div class="header">
         <div><h1>Billing</h1></div>
@@ -88,6 +90,93 @@ require_once "checkUserAuth.php";
 
     ?>
 <?php if($bill_data['status'] == 'pending'){ ?>
+  <div class="modal-wrapper hidden">
+    
+    <div class="invoice-container">
+      <button class="close" onclick="closeModal()">X</button>
+      <div  id="printableArea">
+        <div class="invoice-header">
+            <h1>INVOICE</h1>
+            <!-- <p>123 Main Street, Anytown, USA</p>
+            <p>(555) 123-4567</p> -->
+            <p>info@restaurant.com</p>
+        </div>
+        <div class="invoice-details">
+                <div class="invoice-date">
+                    <p><strong>Date:</strong> 2024-06-17</p>
+                    
+                </div>
+            <div class="invoice-customer">
+                <p><strong>Table:</strong><?php echo $bill_data['table_no']; ?> </p>
+                <!-- <p><strong>Customer Name:</strong> John Doe</p> -->
+            </div>
+        </div>
+        <table  class="invoice-table">
+          <tr style="background-color: #b5b5ae; height: 30px">
+            <th>SN</th>
+            <th>Particular</th>
+            <th>QTY</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+          <?php
+          $sn = 1;
+          foreach ($billProducts_data as $billProduct) {
+              $product_id = $billProduct['product_id'];
+              $check_product_query = "SELECT * FROM products WHERE id = ? LIMIT 1";
+              $stmt = $con->prepare($check_product_query);
+              $stmt->bind_param("i", $product_id);
+              $stmt->execute();
+              $result = $stmt->get_result();
+              $product_data = $result->fetch_assoc();
+              if ($product_data) {
+          ?>
+          <tr>
+            <td><?php echo $sn; ?></td>
+            <td><?php echo $product_data['name']; ?></td>
+            <td><?php echo $billProduct['qty']; ?></td>
+            <td><?php echo $product_data['price']; ?></td>
+            <td><?php echo number_format($billProduct['qty'] * $product_data['price']); ?></td>
+            <?php if($bill_data['status'] == 'pending'){ ?>
+            
+            <?php } ?>
+
+          </tr>
+          
+          <?php
+              $sn++;
+              }
+          }
+          ?>
+          <tfoot>
+                <tr>
+                    <td colspan="4" class="right">Subtotal:</td>
+                    <td><?php echo $bill_data['sub_total']; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="right">Discount:</td>
+                    <td><?php echo $bill_data['discount']; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="right">Vat[%]:</td>
+                    <td><?php echo $bill_data['vat']; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="right"><strong>Total:</strong></td>
+                    <td><strong><?php echo $bill_data['grand_total']; ?></strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="invoice-footer">
+            <p>Thank you for dining with us!</p>
+            <p>Please visit again.</p>
+        </div>
+    </div>
+    <div class="print-button">
+      <button onclick="printDiv('printableArea')">Print</button>
+    </div>
+</div>
+        </div>
 <section>
       <div style="margin: 10px auto; width: 90%; text-align: end">
         <label for="" style="font-weight: bold">Bill No.</label>
@@ -217,13 +306,16 @@ require_once "checkUserAuth.php";
             <input type="text" id="" name="grand_total" value="<?php echo $bill_data['grand_total']; ?>" disabled/>
           </div>
       </div>
-    </section>
+    </section>    
 
     <?php if($bill_data['status'] == 'pending'){ ?>
     <div class="print">
-      <button type="submit"><i class="fa fa-print" aria-hidden="true"></i> Generate Bill</button>
-      <button type="button" class="btn-sm fa fa-money-bill " data-toggle="modal" data-target="#changeStatusModal">
+      <button type="submit"><i class="fa fa-print" aria-hidden="true"></i>Calculate</button>
+      <button type="button" class="btn-sm fa fa-money-bill" data-toggle="modal" data-target="#changeStatusModal">
       Change Status
+      </button>
+      <button type="button" class="btn-sm fa fa-money-bill"  onClick="openModal()">
+      Print
       </button>
     </div>
 
@@ -309,9 +401,22 @@ require_once "checkUserAuth.php";
             </div>
         </div>
     </div>
+
+    
+    
 </div>
 
     <script>
+      function printDiv(divId) {
+     var printContents = document.getElementById(divId).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
         $('#editModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var productId = button.data('id');
@@ -333,7 +438,14 @@ require_once "checkUserAuth.php";
         });
     </script>
     <script>
+      function openModal() {
+        $(".modal-wrapper").removeClass("hidden")
+      }
+      function closeModal() {
+        $(".modal-wrapper").addClass("hidden")
+      }
 
+      
       
       function updateDateTime() {
         var dateTimeElement = document.getElementById("datetime");

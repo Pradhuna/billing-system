@@ -106,10 +106,10 @@ require_once "checkUserAuth.php";
                 </div>
                 <div class="it-fo-co">
                   <button class="ad" name="padd">
-                    <i class="fa-solid fa-plus"></i> Add
+                    <i class="fa-solid fa-plus"></i> Update
                   </button>
                  
-                  <button class="ca">
+                  <button class="ca" name="pcancel">
                     <i class="fa-solid fa-xmark"></i> Cancel
                   </button>
                 </div>
@@ -136,6 +136,9 @@ require_once "checkUserAuth.php";
                           echo "Error:" . mysqli_error($con);
                             // die(mysqli_error($result));
                         }
+                    }
+                    if(isset($_POST['pcancel'])){
+                      header('location:insert.php');
                     }
                 ?>
               </form>
@@ -189,5 +192,6 @@ require_once "checkUserAuth.php";
         </div>
       </div>
     </section>
+    <script>
   </body>
 </html>
