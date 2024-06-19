@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2024 at 04:59 AM
+-- Generation Time: Jun 19, 2024 at 05:08 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -52,7 +52,8 @@ INSERT INTO `billproducts` (`id`, `bill_no`, `product_id`, `price`, `qty`) VALUE
 (13, 212383, 107, '25.00', 2),
 (14, 212383, 106, '250.00', 1),
 (15, 212383, 102, '180.00', 1),
-(16, 870485, 106, '250.00', 1);
+(16, 870485, 106, '250.00', 1),
+(17, 695255, 103, '60.00', 961);
 
 -- --------------------------------------------------------
 
@@ -79,13 +80,14 @@ CREATE TABLE `bills` (
 --
 
 INSERT INTO `bills` (`id`, `bill_no`, `table_no`, `status`, `sub_total`, `discount`, `tax`, `vat`, `grand_total`, `created_date`, `updated_date`) VALUES
-(7, 870485, 51, 'pending', '250.00', '0.00', '0.00', '0.00', '250.00', '2024-06-17 16:48:55', '2024-06-18 02:57:29'),
+(7, 870485, 51, 'paid', '250.00', '5.00', '0.00', '0.00', '237.50', '2024-06-17 16:48:55', '2024-06-18 14:43:01'),
 (8, 159424, 12, 'pending', '1094.00', '0.00', '0.00', '0.00', '1094.00', '2024-06-17 16:53:14', '2024-06-17 16:53:14'),
 (9, 848065, 121, 'pending', '360.00', '0.00', '0.00', '0.00', '360.00', '2024-06-17 16:53:38', '2024-06-17 16:53:38'),
 (10, 483659, 1211, 'pending', '750.00', '0.00', '0.00', '0.00', '750.00', '2024-06-17 16:54:38', '2024-06-17 16:54:38'),
 (11, 781201, 1, 'pending', '1094.00', '0.00', '0.00', '0.00', '1094.00', '2024-06-17 17:08:37', '2024-06-17 17:08:37'),
 (12, 486172, 5, 'pending', '468.00', '0.00', '0.00', '0.00', '468.00', '2024-06-18 01:16:16', '2024-06-18 02:06:19'),
-(13, 212383, 13, 'pending', '730.00', '0.00', '0.00', '0.00', '730.00', '2024-06-18 02:16:24', '2024-06-18 02:19:04');
+(13, 212383, 13, 'pending', '730.00', '0.00', '0.00', '0.00', '730.00', '2024-06-18 02:16:24', '2024-06-18 02:19:04'),
+(14, 695255, 52, 'pending', '57660.00', '0.00', '0.00', '0.00', '57660.00', '2024-06-18 16:37:33', '2024-06-18 16:37:33');
 
 -- --------------------------------------------------------
 
@@ -127,7 +129,6 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`) VALUES
-(34, '12', '547.00'),
 (102, 'Chicken Burger', '180.00'),
 (103, 'Chowmein', '60.00'),
 (104, 'Pizza', '260.00'),
@@ -159,9 +160,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `username`, `gender`, `password`, `confirm_password`, `role`) VALUES
-(10, 'Ram Bahadur', 'ram@gmail.com', '9864665983', 'ram', 'Male', '12345', NULL, 'user'),
-(11, 'Pradhuna Khatri', 'pradhunakc12@gmail.com', '9863927312', 'pradhuna', 'Male', '121212', NULL, 'user'),
-(19, 'Admin', 'admin@gmail.com', '9895858596', 'admin', 'Male', 'asc122', NULL, 'admin');
+(1, 'Gavin Arnold', 'sypetis@mailinator.com', '+1 (348) 788-72', 'vezyfeb', 'Male', '$2y$10$TG0ENQC.W4Xlm2PfV2zB/.DUwLLZo24ZiIN1eZSiv.xGGz3sDDgSG', NULL, 'admin');
 
 --
 -- Indexes for dumped tables
@@ -207,13 +206,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billproducts`
 --
 ALTER TABLE `billproducts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -231,7 +230,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
