@@ -2,6 +2,12 @@
 <?php
 require_once "checkUserAuth.php";
 
+if($_SESSION['role'] != "user"){
+  header("HTTP/1.0 404 Not Found");
+  echo "<h1>404 Not Found</h1>";
+  echo "The page that you have requested could not be found.";
+  exit;
+}
 ?>
 <html lang="en">
   <head>
@@ -50,7 +56,7 @@ require_once "checkUserAuth.php";
                 </button>
               </li> -->
               <li class="top-li">
-                <a href=""><i class="fa fa-sign-out-alt"></i> logout</a>
+                <a href="home.php"><i class="fa fa-sign-out-alt"></i> Home</a>
               </li>
             </ul>
           </nav>

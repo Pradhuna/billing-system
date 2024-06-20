@@ -6,18 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
     $id = $_POST['id'];
     $username = $_POST['username'];
     $name = $_POST['name'];
-    $email = $_POST['email'];
     $phone = $_POST['phone'];
     $gender = $_POST['gender'];
     $role = $_POST['role'];
 
-    if (empty($username) || empty($name) || empty($email) || empty($phone) || empty($gender) || empty($role)) {
+    if (empty($username) || empty($name) || empty($phone) || empty($gender) || empty($role)) {
         echo "All fields are required.";
         exit();
     }
 
-    $stmt = $con->prepare("UPDATE users SET username = ?, name = ?, email = ?, phone = ?, gender = ?, role = ? WHERE id = ?");
-    $stmt->bind_param("ssssssi", $username, $name, $email, $phone, $gender, $role, $id);
+    $stmt = $con->prepare("UPDATE users SET username = ?, name = ?, phone = ?, gender = ?, role = ? WHERE id = ?");
+    $stmt->bind_param("sssssi", $username, $name, $phone, $gender, $role, $id);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'User Updated Successfully.';

@@ -2,6 +2,13 @@
 <html lang="en">
   <?php
   require_once "checkUserAuth.php";
+
+  if($_SESSION['role'] != "user"){
+    header("HTTP/1.0 404 Not Found");
+    echo "<h1>404 Not Found</h1>";
+    echo "The page that you have requested could not be found.";
+    exit;
+  }
   ?>
   <head>
     <meta charset="UTF-8" />
@@ -85,11 +92,13 @@
                 >
               </li>
               <?php } ?>
+            <?php if($_SESSION["role"] == "user"){ ?>
               <li>
                 <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
+              <?php } ?>
               <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a

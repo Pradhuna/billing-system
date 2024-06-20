@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <?php
 require_once "checkUserAuth.php";
-
+if($_SESSION['role'] != "admin"){
+  header("HTTP/1.0 404 Not Found");
+  echo "<h1>404 Not Found</h1>";
+  echo "The page that you have requested could not be found.";
+  exit;
+}
 ?>
 <html lang="en">
   <head>
@@ -85,11 +90,13 @@ require_once "checkUserAuth.php";
                   ><i class="fa-solid fa-users"></i> Users</a
                 >
               </li>
+              <?php if($_SESSION["role"] == "user"){ ?>
               <li>
-                <a href="orders.php"
+                <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
+              <?php } ?>
               <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a
@@ -138,10 +145,10 @@ require_once "checkUserAuth.php";
                 <label for="">Name</label>
                 <input type="text" id="name" name="name"/>
               </div>
-              <div class="emp-fo-co">
+              <!-- <div class="emp-fo-co">
                 <label for="">Email</label>
                 <input type="text" id="email" name="email"/>
-              </div>
+              </div> -->
               <div class="emp-fo-co">
                 <label for="">Phone</label>
                 <input type="phone" id="phone" name="phone"/>
@@ -183,7 +190,6 @@ require_once "checkUserAuth.php";
                     include 'connection.php';
                     if(isset($_POST['submit'])) {
                       $name = mysqli_real_escape_string($con, $_POST['name']);
-                      $email = mysqli_real_escape_string($con, $_POST['email']);
                       $phone = mysqli_real_escape_string($con, $_POST['phone']);
                       $username = mysqli_real_escape_string($con, $_POST['username']);
                       $gender = mysqli_real_escape_string($con, $_POST['gender']);
@@ -192,7 +198,7 @@ require_once "checkUserAuth.php";
                       $role = mysqli_real_escape_string($con, $_POST['role']);
                     
                         // Validation and error checking (you may want to add more thorough validation)
-                        if(empty($name) || empty($email) || empty($phone) || empty($username) || empty($gender) || empty($password) || empty($confirm_password) || empty($role)) {
+                        if(empty($name) || empty($phone) || empty($username) || empty($gender) || empty($password) || empty($confirm_password) || empty($role)) {
                             echo "All fields are required.";
                         } elseif ($password !== $confirm_password) {
                             echo "Password and Confirm Password do not match.";
@@ -201,8 +207,8 @@ require_once "checkUserAuth.php";
                             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                     
                             // Insert the data into the database
-                            $query = "INSERT INTO users (name, email, phone, username, gender, password, role) 
-                                      VALUES ('$name', '$email', '$phone', '$username', '$gender', '$hashed_password','$role')";
+                            $query = "INSERT INTO users (name, phone, username, gender, password, role) 
+                                      VALUES ('$name', '$phone', '$username', '$gender', '$hashed_password','$role')";
                     
                             $result = mysqli_query($con, $query);
                     
@@ -224,7 +230,6 @@ require_once "checkUserAuth.php";
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Email</th>
                   <th>Phone</th>
                   <th>Username</th>
                   <th>Gender</th>
@@ -241,7 +246,6 @@ require_once "checkUserAuth.php";
             while ($userRow = mysqli_fetch_assoc($userResult)) {
                 echo "<tr>
                         <td >".$userRow['name']."</td>
-                        <td>".$userRow['email']."</td>
                         <td>".$userRow['phone']."</td>
                         <td class='user_name'>".$userRow['username']."</td>
                         <td>".$userRow['gender']."</td>
@@ -295,9 +299,6 @@ require_once "checkUserAuth.php";
             </div>
             <div class="emp-fo-co">
                 <label for="">Name</label><input type="text" id="updateName" name="name" />
-            </div>
-            <div class="emp-fo-co">
-                <label for="">Email</label><input type="text" id="updateEmail" name="email" />
             </div>
             <div class="emp-fo-co">
                 <label for="">Phone</label><input type="phone" id="updatePhone" name="phone" />

@@ -42,11 +42,13 @@ require_once "checkUserAuth.php";
                 >
               </li>
               <?php } ?>
+              <?php if($_SESSION["role"] == "user"){ ?>
               <li>
-                <a href="orders.php"
+                <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
+              <?php } ?>
               <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a

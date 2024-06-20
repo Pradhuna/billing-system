@@ -40,11 +40,13 @@ require_once "checkUserAuth.php";
                 >
               </li>
               <?php } ?>
+            <?php if($_SESSION["role"] == "user"){ ?>
               <li>
                 <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
+              <?php } ?>
               <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a
@@ -87,11 +89,6 @@ require_once "checkUserAuth.php";
           <div class="info-item">
             <strong>Contact:</strong>
             <p>01-0565987, 9863927312</p>
-          </div>
-
-          <div class="info-item">
-            <strong>Email:</strong>
-            <p>contact@namasterestaurant.com</p>
           </div>
         </section>
       </div>

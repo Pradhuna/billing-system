@@ -4,8 +4,11 @@ include 'connection.php';
 session_start();
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    if($_SESSION["role"] == "user"){
+        header("location: orders.php");
+        exit();
+    }
     header("location: home.php");
-    exit;
 }
 
 $username = $password = "";

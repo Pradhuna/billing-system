@@ -2,6 +2,12 @@
 <?php
 require_once "checkUserAuth.php";
 
+if($_SESSION['role'] != "user"){
+  header("HTTP/1.0 404 Not Found");
+  echo "<h1>404 Not Found</h1>";
+  echo "The page that you have requested could not be found.";
+  exit;
+}
 ?>
 <html lang="en">
   <head>
@@ -55,7 +61,7 @@ require_once "checkUserAuth.php";
                 </button>
               </li> -->
               <li class="top-li">
-                <a href=""><i class="fa fa-sign-out-alt"></i> logout</a>
+                <a href="home.php"><i class="fa fa-sign-out-alt"></i> Home</a>
               </li>
             </ul>
           </nav>
@@ -173,7 +179,7 @@ require_once "checkUserAuth.php";
         </div>
     </div>
     <div class="print-button">
-      <button onclick="printDiv('printableArea')">Print</button>
+      <button onclick="printDiv('printableArea',<?php echo $bill_no; ?>)">Print</button>
     </div>
 </div>
         </div>
@@ -311,9 +317,9 @@ require_once "checkUserAuth.php";
     <?php if($bill_data['status'] == 'pending'){ ?>
     <div class="print">
       <button type="submit"><i class="fa fa-print" aria-hidden="true"></i>Calculate</button>
-      <button type="button" class="btn-sm fa fa-money-bill" data-toggle="modal" data-target="#changeStatusModal">
-      Change Status
-      </button>
+     <a href="orders.php"> <button type="button" class="btn-sm fa fa-money-bill">
+      Go Back 
+      </button></a>
       <button type="button" class="btn-sm fa fa-money-bill"  onClick="openModal()">
       Print
       </button>
@@ -323,35 +329,6 @@ require_once "checkUserAuth.php";
     </form>
 
     <!-- Modals -->
-    <div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="changeStatusModalLabel">Update Status</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="bills/update-status.php?bill_no=<?php echo $bill_no; ?>" method="POST">
-                    <div class="modal-body">
-                        <input type="hidden" name="product_id" id="edit_product_id">
-                        <div class="form-group">
-                            <label for="status">Change Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="pending">Pending</option>
-                                <option value="paid">Paid</option>
-                            </select>
-                            <input type="hidden" name="bill_no" id="bill_no">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -407,7 +384,7 @@ require_once "checkUserAuth.php";
 </div>
 
     <script>
-      function printDiv(divId) {
+      function printDiv(divId, billNo) {
      var printContents = document.getElementById(divId).innerHTML;
      var originalContents = document.body.innerHTML;
 
@@ -416,6 +393,8 @@ require_once "checkUserAuth.php";
      window.print();
 
      document.body.innerHTML = originalContents;
+
+     window.location.href = 'bills/update-status.php?bill_no=' + billNo;
 }
         $('#editModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);

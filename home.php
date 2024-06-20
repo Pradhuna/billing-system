@@ -1,6 +1,11 @@
 <?php
 require_once "checkUserAuth.php";
-
+if($_SESSION['role'] != "admin"){
+  header("HTTP/1.0 404 Not Found");
+  echo "<h1>404 Not Found</h1>";
+  echo "The page that you have requested could not be found.";
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,11 +45,15 @@ require_once "checkUserAuth.php";
                 >
               </li>
               <?php } ?>
+              <?php if($_SESSION["role"] == "user"){ ?>
+            <?php if($_SESSION["role"] == "user"){ ?>
               <li>
                 <a href="orders.php" class="active"
                   ><i class="fa-solid fa-users"></i> Orders</a
                 >
               </li>
+              <?php } ?>
+              <?php } ?>
               <li>
                 <a href="info.php"
                   ><i class="fa-solid fa-barcode"></i> About Us</a
